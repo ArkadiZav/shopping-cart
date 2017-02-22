@@ -1,3 +1,5 @@
+//Hola Arkadi!!
+
 // an array with all of our cart items
 var cart = [];
 
