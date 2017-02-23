@@ -1,9 +1,8 @@
-// an array with all of our cart items
-var cart = [];
-
-// maybe change position of these 2 things
 var source = $('#cart-template').html();
 var template = Handlebars.compile(source);
+
+// an array with all of our cart items
+var cart = [];
 
 var total = 0;
 
@@ -15,22 +14,35 @@ var updateCart = function () {
   $(".total").empty();
 
   for (var i = 0; i < cart.length; i++) {
-    var newHTML = template({name: cart[i].name, price: cart[i].price});
+    var newHTML = template({name: cart[i].name, price: cart[i].price, parsedName: cart[i].parsedName, totalItemPrice: (cart[i].timesFound * cart[i].price)});
     $(".cart-list").append(newHTML);
   }
     $(".total").append(total);
-  //console.log(total);
 }
-
 
 var addItem = function (item) {
   // TODO: Write this function. Remember this function has nothing to do with display.
   // It simply is for adding an item to the cart array, no HTML involved - honest ;-)
-  var newItem = { price: item.attr("data-price"), name: item.attr("data-name")};
+  var newItem = { price: item.attr("data-price"), name: item.attr("data-name"), parsedName: item.attr("data-name") , timesFound: 0};
   var stringPrice = item.attr("data-price");
   var intPrice = parseInt(stringPrice);
   total += intPrice;
-  cart.push(newItem);
+  var found = false;
+  for (var i = 0; i < cart.length; i++) {
+    if (cart[i].name == newItem.name) {
+      found = true;
+      cart[i].timesFound++;
+      newItem.timesFound = cart[i].timesFound;
+      newItem.parsedName = newItem.name + "(" + newItem.timesFound + ")";
+      cart[i] = newItem;
+      break;
+    }
+  }
+
+  if (found == false) {
+    newItem.timesFound = 1;
+    cart.push(newItem);
+  }
 }
 
 var clearCart = function () {
@@ -42,12 +54,30 @@ var clearCart = function () {
 
 $('.view-cart').on('click', function () {
   // TODO: hide/show the shopping cart!
-  $(".shopping-cart").toggle(function () {
-    $(".shopping-cart").css("display", "block");
-  }, function () {})
-});
+  $(".shopping-cart").fadeToggle();
+})
 
-$('.add-to-cart').on('click', function () {
+// remove item from cart list
+$(".cart-list").on("click", "i" ,function (event) {
+  var itemText = $(this).parent().text();
+  itemText = itemText.replace(/\s+/g, ''); // remove blank spaces in text
+  for (var i = 0; i < cart.length; i++) {
+    if (cart[i].parsedName == itemText) {
+      if (cart[i].timesFound == 1) {
+        total -= cart[i].price;
+        cart.splice(i, 1);
+      }
+      else {
+        total -= cart[i].price;
+        cart[i].timesFound --;
+        cart[i].parsedName = cart[i].name + "(" + cart[i].timesFound + ")";
+      }
+      updateCart();
+    }
+  }
+})
+
+$(document).on('click', ".add-to-cart", function () {
   // TODO: get the "item" object from the page
   var item = $(this).parents(".buybox").parents(".item");
   $(this).toggleClass("btn-primary btn-success");
