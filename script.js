@@ -23,6 +23,7 @@ var updateCart = function () {
 var addItem = function (item) {
   // TODO: Write this function. Remember this function has nothing to do with display.
   // It simply is for adding an item to the cart array, no HTML involved - honest ;-)
+  $(".shopping-cart").css("display", "block");
   var newItem = { price: item.attr("data-price"), name: item.attr("data-name"), parsedName: item.attr("data-name") , timesFound: 0};
   var stringPrice = item.attr("data-price");
   var intPrice = parseInt(stringPrice);
@@ -57,6 +58,11 @@ $('.view-cart').on('click', function () {
   $(".shopping-cart").fadeToggle();
 })
 
+$('.addNewProducts').on('click', function () {
+  // TODO: hide/show the shopping cart!
+  $(".user-circle-o").fadeToggle();
+})
+
 // remove item from cart list
 $(".cart-list").on("click", "i" ,function (event) {
   var itemText = $(this).parent().text();
@@ -80,7 +86,7 @@ $(".cart-list").on("click", "i" ,function (event) {
 $(document).on('click', ".add-to-cart", function () {
   // TODO: get the "item" object from the page
   var item = $(this).parents(".buybox").parents(".item");
-  $(this).toggleClass("btn-primary btn-success");
+  //$(this).toggleClass("btn-primary btn-success");
   addItem(item);
   updateCart();
 });

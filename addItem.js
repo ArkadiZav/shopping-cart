@@ -11,15 +11,21 @@ var updateProducts = function () {
 };
 
 $(".NewProduct-form").keypress(function (event) {
-   if (event.which === 13) {
+   if (event.which === 13) { // if user pressed ENTER
        var name = $("#product-name").val();
        var price = $("#product-price").val();
        var image = $("#product-image").val();
-       var goodURL = validationURL();
-       if (goodURL) {
+
+       var goodName = validationName(name);
+       var validPrice = validationPrice(price);
+       var goodURL = validationURL(image);
+
+       if (goodName && validPrice && goodURL) {
            addProduct(name, price, image);
+           alert("New product has been successfully added!");
+           updateProducts();
+           document.body.scrollIntoView(false);
        }
-       updateProducts();
    }
 });
 
@@ -28,32 +34,45 @@ var addProduct = function (name, price, image) {
        name: name,
        price: price,
        image: image
-
    })
 };
 
-function validationURL() {
-   var imageURL = $("#product-image").val();
+function validationName (name) {
+    if (name.length < 2) {
+       alert("The name of the product must contain at least 2 characters");
+       return false;
+    }
+    return true;
+}
+
+function validationPrice (price) {
+  if (price.length === 0) {
+    alert("Please specify the product's price");
+    return false;
+  }
+  if (price <= 0) {
+    alert("The price must be a positive number");
+    return false;
+  }
+  return true;
+}
+
+// just a basic url validation. nothing too sophisticated
+function validationURL (url) {
    var www = false;
-   var com = false;
    var http = false;
 
-   for (var i = 0; i < imageURL.length; i++) {
-       if (imageURL[i] === "w" && imageURL[i + 1] === "w" && imageURL[i + 2] === "w") {
-           www = true
+   for (var i = 0; i < url.length; i++) {
+       if (url[i] === "w" && url[i + 1] === "w" && url[i + 2] === "w") {
+           www = true;
        }
-       if (imageURL[i] === "c" && imageURL[i + 1] === "o" && imageURL[i + 2] === "m") {
-           com = true
-       }
-       if (imageURL[i] === "h" && imageURL[i + 1] === "t" && imageURL[i + 2] === "t" && imageURL[i + 3] === "p") {
-           http = true
+       if (url[i] === "h" && url[i + 1] === "t" && url[i + 2] === "t" && url[i + 3] === "p") {
+           http = true;
        }
    }
-   if (!www && !com && !http) {
-       alert("please re enter a valid URL!");
+   if (!www || !http) {
+       alert("Please re enter a valid URL!");
        return false;
    }
-   else {
-       return true;
-   }
+   return true;
 }

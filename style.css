@@ -47,6 +47,10 @@ body {
   cursor: pointer;
 }
 
+.add-to-cart:hover {
+  color: chartreuse;
+}
+
 .card {
   display: table;
   height: 100%;
@@ -89,6 +93,17 @@ body {
   box-shadow: 2px 2px 2px #B3B3B3;
   padding: 15px;
   z-index: 999;
+}
+
+.user-circle-o {
+   position: fixed;
+  top: 360px;
+  right: 40px;
+  display: none;
+  background-color: #fff; */
+  box-shadow: 2px 2px 2px #B3B3B3;
+  padding: 15px;
+  z-index: 1;
 }
 
 .cart-title {
