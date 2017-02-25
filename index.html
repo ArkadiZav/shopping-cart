@@ -4,7 +4,10 @@
   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="node_modules/font-awesome/css/font-awesome.min.css">
+<!--  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
   <link rel="stylesheet" type="text/css" href="style.css">
+<!--  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+<!--  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
   <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="node_modules/handlebars/dist/handlebars.min.js"></script>
@@ -33,7 +36,10 @@
                      <a href="#" class="view-cart" data-toggle="dropdown" role="button">Shopping Cart <i
                              class="fa fa-shopping-cart"></i></a>
                  </li>
-                 <li><a href="#newProduct">Admin</a></li>
+                 <li class="dropdown">
+                   <a href="#" class= "addNewProducts" data-toggle="dropdown" role="button">Admin <i
+                     class = "fa fa-user-circle-o" aria-hidden="true"></i></a>
+                 </li>
              </ul>
          </div><!-- /.navbar-collapse -->
      </div><!-- /.container-fluid -->
@@ -49,7 +55,7 @@
       <div class="cart-list">
         <script id="cart-template" type="text/x-handlebars-template">
           <p>
-            <span> <i class = "fa fa-trash"> </i> {{ parsedName }} </span> - <span> ${{ totalItemPrice }} </span>
+            <span> <i class = "fa fa-trash" role ="button"> </i> {{ parsedName }} </span> - <span> ${{ totalItemPrice }} </span>
           </p>
         </script>
       </div>
@@ -57,6 +63,31 @@
       <button type="button" class="btn clear-cart">Clear Cart</button>
     </div>
 
+    <div class ="user-circle-o">
+      <div class="addNewProduct-form">
+         <div class="row">
+           <div class="col-md-12">
+               <div class="page-header">
+                   <h1>Add New Product</h1>
+               </div>
+               <form class="NewProduct-form">
+                   <h4>Name:</h4>
+                   <div class="form-group">
+                       <input type="text" id="product-name" class="form-control" placeholder="Product Name"/>
+                   </div>
+                   <h4>Price:</h4>
+                   <div class="form-group">
+                       <input type="number" id="product-price" class="form-control" placeholder="Product price"/>
+                   </div>
+                   <h4>Image:</h4>
+                   <div class="form-group">
+                       <input type="url" id="product-image" class="form-control" placeholder="URL of the image"/>
+                   </div>
+               </form>
+           </div>
+         </div>
+       </div>
+     </div>
 
     <div class="row">
       <div class="col-md-4">
@@ -109,7 +140,7 @@
 
 
     </div>
-    <div class="row products">
+    <div class="row">
       <div class="col-md-4">
         <div class="card-container">
           <div class="card item" item data-name="book" data-price="25">
@@ -158,37 +189,12 @@
         </div>
       </div>
     </div>
-  </div>
-  <a name="newProduct"></a>
-  <section class="addNewProduct-form">
-     <div class="row">
-         <div class="col-md-6 col-md-offset-3">
-             <div class="page-header">
-                 <h1>Add New Product</h1>
-             </div>
 
-             <form class="NewProduct-form">
-                 <h4>Name of the Product</h4>
+    <div class="row products">
+    </div>
 
-                 <div class="form-group">
-                     <input type="text" id="product-name" class="form-control" placeholder="Product Name">
-                     </input>
-                 </div>
-                 <h4>Price of the Product</h4>
-                 <div class="form-group">
-                     <input type="number" id="product-price" class="form-control" placeholder="Product price">
-                     </input>
-                 </div>
-                 <h4>Image of the Product</h4>
-                 <div class="form-group">
-                     <input type="url" id="product-image" class="form-control" placeholder="URL of the image">
-                     </input>
-                 </div>
-             </form>
-         </div>
-     </div>
+</div>
 
-  </section>
   <script id="templateProducts" type="text/x-handlebars-template">
          <div class="col-md-4">
              <div class="card-container">
